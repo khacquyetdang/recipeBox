@@ -39,10 +39,28 @@ describe("Component : RecipeItem", function() {
     const editBtn = wrapper.find('#editItemBtn');
     editBtn.simulate('click');
 
-    const validBtn = <Button className="buttonRecipeItem" bsStyle="primary">Valid</Button>;
-    const closeBtn = <Button className="buttonRecipeItem" bsStyle="primary">Cancel</Button>;
+    const validBtn = <Button id="validItemBtn" className="buttonRecipeItem" bsStyle="primary">Valid</Button>;
+    const closeBtn = <Button id="cancelItemBtn" className="buttonRecipeItem" bsStyle="primary">Cancel</Button>;
+      expect(wrapper.containsMatchingElement(closeBtn)).toEqual(true);
     expect(wrapper.containsMatchingElement(validBtn)).toEqual(true);
-    expect(wrapper.containsMatchingElement(closeBtn)).toEqual(true);
+
+  });
+
+
+  it('It should close edit mode when click on cancel', () => {
+    wrapper.find('.RecipeTitle').simulate('click');
+    const editBtn = wrapper.find('#editItemBtn');
+    editBtn.simulate('click');
+
+    const cancelItemBtn = wrapper.find('#cancelItemBtn');
+    cancelItemBtn.simulate('click');
+
+    const validBtn = <Button id="validItemBtn"
+    className="buttonRecipeItem" bsStyle="primary">Valid</Button>;
+    const closeBtn = <Button id="cancelItemBtn"
+      className="buttonRecipeItem" bsStyle="primary">Cancel</Button>;
+    expect(wrapper.containsMatchingElement(validBtn)).toEqual(false);
+    expect(wrapper.containsMatchingElement(closeBtn)).toEqual(false);
 
   });
 
