@@ -9,7 +9,7 @@ class App extends Component {
 
   constructor(props)
   {
-    super(props);    
+    super(props);
     this.closeAddItemModal = this.closeAddItemModal.bind(this);
     this.state = {
       showAddItemModal: false,
@@ -19,7 +19,7 @@ class App extends Component {
 
   onAddRecipeBtnClick()
   {
-    console.log("onAddRecipeBtnClick");
+    //console.log("onAddRecipeBtnClick");
     this.setState({
       showAddItemModal: true
     });
@@ -51,7 +51,7 @@ class App extends Component {
           <RecipeList items={recipes}
             showAddItemModal={this.state.showAddItemModal}
             />
-          <Button bsStyle="primary" onClick={(e) => this.onAddRecipeBtnClick()}>Add recipe</Button>
+          <Button id="addItemBtn" bsStyle="primary" onClick={(e) => this.onAddRecipeBtnClick()}>Add recipe</Button>
           <AddRecipeItem show={this.state.showAddItemModal}
               onCloseAddItemModal={this.closeAddItemModal}/>
         </div>

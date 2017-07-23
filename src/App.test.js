@@ -20,15 +20,19 @@ describe("Component : App", function() {
 
   it('renders Button', () => {
     const wrapper = shallow(<App />);
-    const btnAddRecipe = <Button bsStyle="primary">Add recipe</Button>;
-      expect(wrapper.contains(btnAddRecipe)).toEqual(true);
+    const btnAddRecipe = <Button id="addItemBtn" bsStyle="primary">Add recipe</Button>;
+      expect(wrapper.containsMatchingElement(btnAddRecipe)).toEqual(true);
     });
 
 
     it('render AddRecipeItem when click on the add recipe button', () => {
       const wrapper = shallow(<App />);
+
+      const addBtn = wrapper.find('#addItemBtn');
+      addBtn.simulate('click');
       const addRecipeItem = wrapper.find(AddRecipeItem);
-      expect(false).toEqual(true);
+      expect(addRecipeItem.props().show).toEqual(true);
+      expect(wrapper.state().showAddItemModal).toEqual(true);
     });
 
 });

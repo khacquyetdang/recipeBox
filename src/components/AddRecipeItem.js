@@ -14,14 +14,14 @@ class AddRecipeItem extends Component {
 
   componentWillReceiveProps(nextProps)
   {
-    console.log("componentWillReceiveProps");
+    //console.log("componentWillReceiveProps");
     this.setState ({
       show : nextProps.show
     });
   }
 
   hideModal(){
-    console.log("hideModal");
+    //console.log("hideModal");
     this.props.onCloseAddItemModal();
   }
   render() {
@@ -48,8 +48,8 @@ class AddRecipeItem extends Component {
 
       </Modal.Body>
       <Modal.Footer>
-      <Button>Add</Button>
-      <Button onClick={(event) => this.hideModal()}>Close</Button>
+      <Button  bsStyle="primary">Add</Button>
+      <Button  bsStyle="primary" onClick={(event) => this.hideModal()}>Close</Button>
       </Modal.Footer>
       </Form>
       </Modal>
