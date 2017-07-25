@@ -12,6 +12,9 @@ class RecipeItem extends Component {
       name: this.props.recipe.name,
       ingredients: this.props.recipe.ingredients
     }
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
   }
 
   onExpand(event)
@@ -31,6 +34,25 @@ class RecipeItem extends Component {
       editingMode: true
     });
   }
+
+
+  onCancelBtnClick(event)
+  {
+    //event.preventDefault();
+    console.log("onCancelBtnClick");
+    this.setState({
+      editingMode: false
+    });
+  }
+
+  handleNameChange(event) {
+    this.setState({name: event.target.value});
+  }
+
+  handleIngredientsChange(event) {
+    this.setState({ingredients: event.target.value});
+  }
+
   renderEditMode()
   {
     return (
@@ -46,8 +68,9 @@ class RecipeItem extends Component {
             {' '}
             <FormControl
               className="ingredientsTextArea"
-              componentClass="textarea"
-              value= { this.state.name }
+               type="text"
+               onChange= { this.handleNameChange }
+               value= { this.state.name }
               />
           </FormGroup>
 
@@ -58,16 +81,23 @@ class RecipeItem extends Component {
               className="ingredientsTextArea"
               componentClass="textarea"
               value= { this.state.ingredients }
+              onChange = { this.handleIngredientsChange }
               />
           </FormGroup>
 
           <div className="RecipeBtnContainer">
-            <Button className="buttonRecipeItem" bsStyle="primary">Cancel</Button>
+            <Button
+              id="cancelItemBtn"
+              className="buttonRecipeItem"
+              bsStyle="primary"
+              onClick={(event) => this.onCancelBtnClick(event)}>Cancel
+              </Button>
             <Button
               id="validItemBtn"
-              onClick={(event) => this.onEditBtnClick(event)}
-              className="buttonRecipeItem">
-              Edit</Button>
+              bsStyle="primary"
+              className="buttonRecipeItem"
+              onClick={(event) => this.onEditBtnClick(event)}>
+              Valid</Button>
           </div>
         </Form>
       </div>
