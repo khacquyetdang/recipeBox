@@ -1,5 +1,6 @@
-import reducer from '../recipe'
+import reducer from '../recipe';
 
+import deepFreeze from 'deep-freeze';
 describe('recipes reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(
@@ -12,13 +13,25 @@ describe('recipes reducer', () => {
   });
 
   it('should handle ADD_RECIPE', () => {
+    const stateSimpleBefore = {
+      recipes: [],
+      item_expand: -1,
+      edit_mode: false
+    };
+    const stateSimpleAdd = {
+      recipes: [
+        {
+          name: 'Pate',
+          ingredients: 'Sel, beurre, poivre'
+        }
+      ],
+      item_expand: -1,
+      edit_mode: false
+    };
+    deepFreeze(stateSimpleBefore);
     expect(
       reducer (
-        {
-          recipes: [],
-          item_expand: -1,
-          edit_mode: false
-        },
+        stateSimpleBefore,
         {
           type: 'ADD_RECIPE',
           name: 'Pate',
@@ -26,16 +39,7 @@ describe('recipes reducer', () => {
         }
       )
     ).toEqual(
-      {
-        recipes: [
-          {
-            name: 'Pate',
-            ingredients: 'Sel, beurre, poivre'
-          }
-        ],
-        item_expand: -1,
-        edit_mode: false
-      }
+      stateSimpleAdd
     );
 
     expect(
