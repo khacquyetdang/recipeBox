@@ -31,13 +31,8 @@ export default function recipe(state = initialState, action) {
     }
     case 'DELETE_RECIPE': {
       return Object.assign({}, state, {
-        recipes: [
-          ...state.recipes,
-          {
-            name: action.name,
-            ingredients: action.ingredients,
-          }
-        ]
+        recipes:
+          state.recipes.slice(0, action.index).concat(state.recipes.slice(action.index + 1))
       });
     }
     case 'VIEW_RECIPE_DETAIL': {
