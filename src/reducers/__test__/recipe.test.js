@@ -28,86 +28,37 @@ describe('recipes reducer', () => {
       item_expand: -1,
       edit_mode: false
     };
+    const actionAdd1 = {
+      type: 'ADD_RECIPE',
+      name: 'Pate',
+      ingredients: 'Sel, beurre, poivre'
+    };
     deepFreeze(stateSimpleBefore);
     expect(
       reducer (
         stateSimpleBefore,
-        {
-          type: 'ADD_RECIPE',
-          name: 'Pate',
-          ingredients: 'Sel, beurre, poivre'
-        }
+        actionAdd1
       )
     ).toEqual(
       stateSimpleAdd
     );
 
-    expect(
-      reducer (
-        {
-          recipes: [
-            {
-              name: 'Pate',
-              ingredients: 'Sel, beurre, poivre'
-            }
-          ],
-          item_expand: -1,
-          edit_mode: false
-        },
-        {
-          type: 'ADD_RECIPE',
-          name: 'bun cha',
-          ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-        }
-      )
-    ).toEqual(
-      {
-        recipes: [
-          {
-            name: 'Pate',
-            ingredients: 'Sel, beurre, poivre'
-          },
-          {
-            name: 'bun cha',
-            ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-          }
-        ],
-        item_expand: -1,
-        edit_mode: false
-      }
-    );
-  }
-);
-
-it('should handle DELETE_RECIPE', () => {
-  expect(
-    reducer (
-      {
-        recipes: [
-          {
-            name: 'Pate',
-            ingredients: 'Sel, beurre, poivre'
-          }
-        ],
-        item_expand: -1,
-        edit_mode: false
-      },
-      {
-        type: 'DELETE_RECIPE',
-        index: 0
-      }
-    )
-  ).toEqual(
-    {
+    const stateBeforeTestAdd = {
       recipes: [
+        {
+          name: 'Pate',
+          ingredients: 'Sel, beurre, poivre'
+        }
       ],
       item_expand: -1,
       edit_mode: false
-    }
-  );
-
-  expect(
-    reducer ({
+    };
+    const actionAdd2 = {
+      type: 'ADD_RECIPE',
+      name: 'bun cha',
+      ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
+    };
+    const stateTestAdd2Expected = {
       recipes: [
         {
           name: 'Pate',
@@ -120,26 +71,53 @@ it('should handle DELETE_RECIPE', () => {
       ],
       item_expand: -1,
       edit_mode: false
-    },
-    {
-      type: 'DELETE_RECIPE',
-      index: 0,
-      ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-    }
-  )
-).toEqual({
-  recipes: [
-    {
-      name: 'bun cha',
-      ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-    }
-  ],
-  item_expand: -1,
-  edit_mode: false
-});
+    };
 
-expect(
-  reducer ({
+    deepFreeze(stateBeforeTestAdd);
+    expect(
+      reducer (
+        stateBeforeTestAdd, actionAdd2
+      )
+    ).toEqual(stateTestAdd2Expected);
+  }
+);
+
+it('should handle DELETE_RECIPE', () => {
+  const actionDelete1 =   {
+    type: 'DELETE_RECIPE',
+    index: 0
+  };
+  const stateBeforeTestDelete = {
+    recipes: [
+      {
+        name: 'Pate',
+        ingredients: 'Sel, beurre, poivre'
+      }
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  const expectedResultTestDelete1 = {
+    recipes: [
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  deepFreeze(stateBeforeTestDelete);
+  expect(
+    reducer (
+      stateBeforeTestDelete, actionDelete1
+    )
+  ).toEqual(
+    expectedResultTestDelete1
+  );
+
+  const actionDelete2 = {
+    type: 'DELETE_RECIPE',
+    index: 0,
+    ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
+  };
+  const stateBeforeTestDelete2 =  {
     recipes: [
       {
         name: 'Pate',
@@ -152,27 +130,60 @@ expect(
     ],
     item_expand: -1,
     edit_mode: false
-  },
-  {
+  };
+  const stateTestDelete2Expected = {
+    recipes: [
+      {
+        name: 'bun cha',
+        ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
+      }
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  deepFreeze(stateBeforeTestDelete2);
+  expect(
+    reducer (stateBeforeTestDelete2, actionDelete2)
+  ).toEqual(stateTestDelete2Expected);
+
+  const actionDelete3 = {
+    type: 'DELETE_RECIPE',
+    index: 1
+  };
+  const stateBeforeTestDelete3 = {
+    recipes: [
+      {
+        name: 'Pate',
+        ingredients: 'Sel, beurre, poivre'
+      },
+      {
+        name: 'bun cha',
+        ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
+      }
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  const stateTestDelete3Expected= {
+    recipes: [
+      {
+        name: 'Pate',
+        ingredients: 'Sel, beurre, poivre'
+      }
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  deepFreeze(stateBeforeTestDelete3);
+  expect(
+    reducer (stateBeforeTestDelete3, actionDelete3)
+  ).toEqual(stateTestDelete3Expected);
+
+  const actionDelete4 = {
     type: 'DELETE_RECIPE',
     index: 1,
-    ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-  }
-)
-).toEqual({
-  recipes: [
-    {
-      name: 'Pate',
-      ingredients: 'Sel, beurre, poivre'
-    }
-  ],
-  item_expand: -1,
-  edit_mode: false
-});
-
-
-expect(
-  reducer ({
+  };
+  const stateBeforeDelete4 = {
     recipes: [
       {
         name: 'Pate',
@@ -189,28 +200,25 @@ expect(
     ],
     item_expand: -1,
     edit_mode: false
-  },
-  {
-    type: 'DELETE_RECIPE',
-    index: 1,
-    ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-  }
-)
-).toEqual({
-  recipes: [
-    {
-      name: 'Pate',
-      ingredients: 'Sel, beurre, poivre'
-    },
-    {
-      name: 'porc au caramel',
-      ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
-    }
-  ],
-  item_expand: -1,
-  edit_mode: false
-});
-
+  };
+  const stateExpectedDelete4 = {
+    recipes: [
+      {
+        name: 'Pate',
+        ingredients: 'Sel, beurre, poivre'
+      },
+      {
+        name: 'porc au caramel',
+        ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
+      }
+    ],
+    item_expand: -1,
+    edit_mode: false
+  };
+  deepFreeze(stateBeforeDelete4);
+  expect(
+    reducer (stateBeforeDelete4 ,actionDelete4)
+  ).toEqual(stateExpectedDelete4);
 
 }
 );
