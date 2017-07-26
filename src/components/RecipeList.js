@@ -16,7 +16,7 @@ class RecipeList extends Component {
     if (recipes !== undefined && recipes.length > 0)
     {
       itemList = recipes.map((recipe, index) => {
-        return <RecipeItem key={index} recipe={recipe}/>;
+        return <RecipeItem key={index} index={index} recipe={recipe}/>;
       });
     }
     return itemList;

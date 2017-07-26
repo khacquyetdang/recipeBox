@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Well, FormControl, Form, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Button, Well, FormControl, Form, FormGroup, ControlLabel, Modal } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import './styles/RecipeItem.css';
+import {
+  DELETE_RECIPE,
+  UPDATE_RECIPE
+} from '../constants';
 
 class RecipeItem extends Component {
   constructor(props)
@@ -9,12 +14,17 @@ class RecipeItem extends Component {
     this.state = {
       expand: false,
       editingMode: false,
+      showalert: false,
       name: this.props.recipe.name,
       ingredients: this.props.recipe.ingredients
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
+    this.closeDeleteAlert = this.closeDeleteAlert.bind(this);
+    this.onConfirmDeleteRecipe = this.onConfirmDeleteRecipe.bind(this);
+
+    console.log('render item ' + this.props.index);
   }
 
   onExpand(event)
@@ -23,6 +33,12 @@ class RecipeItem extends Component {
     var expand = !this.state.expand;
     this.setState({
       expand
+    });
+  }
+  closeDeleteAlert(event)
+  {
+    this.setState({
+      showalert: false
     });
   }
 
@@ -35,7 +51,18 @@ class RecipeItem extends Component {
     });
   }
 
-
+  onDeleteBtnClick(event) {
+    this.setState({
+      showalert: true
+    });
+  }
+  onConfirmDeleteRecipe(event) {
+    const actionDeleteRecipe = {
+      type: DELETE_RECIPE,
+      index: this.props.index
+    };
+    this.props.onDeleteRecipe(actionDeleteRecipe);
+  }
   onCancelBtnClick(event)
   {
     //event.preventDefault();
@@ -103,6 +130,24 @@ class RecipeItem extends Component {
       </div>
     );
   }
+
+  renderAlert()
+  {
+    return (
+      <Modal show={this.state.showalert} onHide={this.closeDeleteAlert}>
+         <Modal.Header closeButton>
+           <Modal.Title>Delete </Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+            <p>Do you want to remove this recipes?</p>
+         </Modal.Body>
+         <Modal.Footer>
+           <Button onClick={this.onConfirmDeleteRecipe}>Yes</Button>
+           <Button onClick={this.closeDeleteAlert}>Close</Button>
+         </Modal.Footer>
+       </Modal>
+    );
+  }
   renderDetail()
   {
     if (this.state.expand)
@@ -122,7 +167,9 @@ class RecipeItem extends Component {
             </Well>
           </div>
           <div className="RecipeAddEditContainer">
-            <Button className="buttonRecipeItem" bsStyle="danger">Delete</Button>
+            <Button className="buttonRecipeItem"
+              onClick={(event) => this.onDeleteBtnClick(event)}
+              bsStyle="danger">Delete</Button>
             <Button
               id="editItemBtn"
               onClick={(event) => this.onEditBtnClick(event)}
@@ -144,10 +191,18 @@ class RecipeItem extends Component {
         <div className="RecipeTitle" onClick={(event) => this.onExpand(event)}>
             { this.props.recipe.name }
           </div>
-        {   this.renderDetail() }
+        { this.renderDetail() }
+        { this.renderAlert() }
       </div>
     );
   }
 }
+function mapDispatchToProps(dispatch){
+  return {
+    onDeleteRecipe: (actionDeleteRecipe) => {
+      dispatch(actionDeleteRecipe);
+    }
+  }
+}
 
-export default RecipeItem;
+export default connect(null, mapDispatchToProps) (RecipeItem);
