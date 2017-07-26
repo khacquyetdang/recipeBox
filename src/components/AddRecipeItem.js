@@ -17,7 +17,6 @@ class AddRecipeItem extends Component {
 
 
   onFormSubmit(event) {
-    console.log('onAddRecipeFormSubmit');
     const { store } = this.context;
     if (this.state.name.trim().length > 0)
     {
@@ -26,8 +25,9 @@ class AddRecipeItem extends Component {
         name: this.state.name,
         ingredients: this.state.ingredients
       };
-      this.props.onAddItem(actionAddRecipe);
-      console.log('will dispatch action');
+      // both of them work
+      //this.props.onAddItem(actionAddRecipe);
+      this.props.dispatch(actionAddRecipe);
       this.props.onCloseAddItemModal();
     }
   }
@@ -35,14 +35,12 @@ class AddRecipeItem extends Component {
 
   componentWillReceiveProps(nextProps)
   {
-    //console.log("componentWillReceiveProps");
     this.setState ({
       show : nextProps.show
     });
   }
 
   hideModal(){
-    //console.log("hideModal");
     this.props.onCloseAddItemModal();
   }
   render() {
@@ -88,4 +86,5 @@ function mapDispatchToProps(dispatch){
   }
 }
 
-export default connect(null, mapDispatchToProps) (AddRecipeItem);
+//export default connect(null, mapDispatchToProps) (AddRecipeItem);
+export default connect() (AddRecipeItem);

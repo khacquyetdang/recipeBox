@@ -27,7 +27,6 @@ class App extends Component {
 
   closeAddItemModal()
   {
-    console.log("closeAddItemModal");
     this.setState({
       showAddItemModal: false
     });

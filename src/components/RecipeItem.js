@@ -34,7 +34,7 @@ class RecipeItem extends Component {
       expand
     });
   }
-  
+
   closeDeleteAlert(event)
   {
     this.setState({
@@ -78,7 +78,6 @@ class RecipeItem extends Component {
   onCancelBtnClick(event)
   {
     //event.preventDefault();
-    console.log("onCancelBtnClick");
     this.setState({
       editingMode: false
     });
