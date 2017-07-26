@@ -23,8 +23,7 @@ class RecipeItem extends Component {
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.closeDeleteAlert = this.closeDeleteAlert.bind(this);
     this.onConfirmDeleteRecipe = this.onConfirmDeleteRecipe.bind(this);
-
-    console.log('render item ' + this.props.index);
+    this.onUpdateBtnClick = this.onUpdateBtnClick.bind(this);
   }
 
   onExpand(event)
@@ -45,7 +44,6 @@ class RecipeItem extends Component {
   onEditBtnClick(event)
   {
     //event.preventDefault();
-    console.log("onEditBtnClick");
     this.setState({
       editingMode: true
     });
@@ -62,6 +60,19 @@ class RecipeItem extends Component {
       index: this.props.index
     };
     this.props.onDeleteRecipe(actionDeleteRecipe);
+  }
+
+  onUpdateBtnClick(event) {
+    const actionUpdateRecipe = {
+      type: UPDATE_RECIPE,
+      index: this.props.index,
+      name: this.state.name,
+      ingredients: this.state.ingredients
+    };
+    this.props.onUpdateRecipe(actionUpdateRecipe);
+    this.setState({
+      editingMode: false
+    });
   }
   onCancelBtnClick(event)
   {
@@ -123,8 +134,8 @@ class RecipeItem extends Component {
               id="validItemBtn"
               bsStyle="primary"
               className="buttonRecipeItem"
-              onClick={(event) => this.onEditBtnClick(event)}>
-              Valid</Button>
+              onClick={(event) => this.onUpdateBtnClick(event)}>
+              Update</Button>
           </div>
         </Form>
       </div>
@@ -201,6 +212,9 @@ function mapDispatchToProps(dispatch){
   return {
     onDeleteRecipe: (actionDeleteRecipe) => {
       dispatch(actionDeleteRecipe);
+    },
+    onUpdateRecipe: (actionUpdateRecipe) => {
+      dispatch(actionUpdateRecipe);
     }
   }
 }

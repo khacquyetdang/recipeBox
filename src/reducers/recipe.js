@@ -45,20 +45,21 @@ export default function recipe(state = initialState, action) {
         recipes: recipes }
       );
       updateLocalStorage(state);
-      return Object.assign({}, state, {
-        recipes: recipes
-      });
+      return state;
     }
     case UPDATE_RECIPE: {
-      return Object.assign({}, state, {
-        recipes: [
-          ...state.recipes,
-          {
-            name: action.name,
-            ingredients: action.ingredients,
-          }
-        ]
+      recipes = state.recipes.map((recipe, index) => {
+        if (index === action.index)
+        {
+          return { name: action.name, ingredients: action.ingredients }
+        }
+        return recipe;
       });
+      state = Object.assign({}, state, {
+        recipes: recipes }
+      );
+      updateLocalStorage(state);
+      return state;
     }
     case DELETE_RECIPE: {
       recipes = state.recipes.slice(0, action.index).concat(state.recipes.slice(action.index + 1));
