@@ -1,3 +1,12 @@
+import {
+    ADD_RECIPE,
+    DELETE_RECIPE,
+    SET_RECIPES,
+    UPDATE_RECIPE,
+    VIEW_RECIPE_DETAIL,
+    VIEW_RECIPE_EDIT_MODE,
+    _MrDang_recipes,
+} from '../../constants';
 import reducer from '../recipe';
 
 import deepFreeze from 'deep-freeze';
@@ -31,7 +40,7 @@ describe('recipes reducer', () => {
       ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
     }];
     const actionsetRecipe = {
-      type: 'SET_RECIPES',
+      type: SET_RECIPES,
       recipes: recipes
     };
 
@@ -71,7 +80,7 @@ describe('recipes reducer', () => {
       edit_mode: false
     };
     const actionAdd1 = {
-      type: 'ADD_RECIPE',
+      type: ADD_RECIPE,
       name: 'Pate',
       ingredients: 'Sel, beurre, poivre'
     };
@@ -96,7 +105,7 @@ describe('recipes reducer', () => {
       edit_mode: false
     };
     const actionAdd2 = {
-      type: 'ADD_RECIPE',
+      type: ADD_RECIPE,
       name: 'bun cha',
       ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
     };
@@ -126,7 +135,7 @@ describe('recipes reducer', () => {
 
 it('should handle DELETE_RECIPE', () => {
   const actionDelete1 =   {
-    type: 'DELETE_RECIPE',
+    type: DELETE_RECIPE,
     index: 0
   };
   const stateBeforeTestDelete = {
@@ -155,7 +164,7 @@ it('should handle DELETE_RECIPE', () => {
   );
 
   const actionDelete2 = {
-    type: 'DELETE_RECIPE',
+    type: DELETE_RECIPE,
     index: 0,
     ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
   };
@@ -189,7 +198,7 @@ it('should handle DELETE_RECIPE', () => {
   ).toEqual(stateTestDelete2Expected);
 
   const actionDelete3 = {
-    type: 'DELETE_RECIPE',
+    type: DELETE_RECIPE,
     index: 1
   };
   const stateBeforeTestDelete3 = {
@@ -222,7 +231,7 @@ it('should handle DELETE_RECIPE', () => {
   ).toEqual(stateTestDelete3Expected);
 
   const actionDelete4 = {
-    type: 'DELETE_RECIPE',
+    type: DELETE_RECIPE,
     index: 1,
   };
   const stateBeforeDelete4 = {

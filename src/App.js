@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux';
 import RecipeList from './components/RecipeList';
 import AddRecipeItem from './components/AddRecipeItem';
-import reducer from './reducers/recipe';
 
 import './App.css';
-
-var store = createStore(reducer)
 
 class App extends Component {
 
@@ -51,7 +46,6 @@ class App extends Component {
       ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
     }];
     return (
-      <Provider store={store}>
         <div className="AppContainer">
           <div className="App">
             <RecipeList
@@ -62,7 +56,6 @@ class App extends Component {
               onCloseAddItemModal={this.closeAddItemModal}/>
           </div>
         </div>
-      </Provider>
     );
   }
 }
