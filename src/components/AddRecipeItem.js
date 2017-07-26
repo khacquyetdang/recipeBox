@@ -2,15 +2,36 @@ import React, { Component } from 'react';
 import { Button, Well, Modal, Form,
 FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import './styles/AddRecipeItem.css';
+import { connect } from 'react-redux';
 
 class AddRecipeItem extends Component {
   constructor(props)
   {
     super(props);
     this.state = {
-      show: this.props.show
+      show: this.props.show,
+      name: '',
+      ingredients: ''
     }
   }
+
+
+  onFormSubmit(event) {
+    console.log('onAddRecipeFormSubmit');
+    const { store } = this.context;
+    if (this.state.name.trim().length > 0)
+    {
+      const actionAddRecipe = {
+        type: 'ADD_RECIPE',
+        name: this.state.name,
+        ingredients: this.state.ingredients
+      };
+      this.props.onAddItem(actionAddRecipe);
+      console.log('will dispatch action');
+      this.props.onCloseAddItemModal();
+    }
+  }
+
 
   componentWillReceiveProps(nextProps)
   {
@@ -29,32 +50,42 @@ class AddRecipeItem extends Component {
       <Modal
         show={this.state.show}
         className="AddRecipeItemContainer">
-      <Form>
-      <Modal.Header>
-      <Modal.Title className="text-center"><h2>Add a recipe</h2></Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <FormGroup controlId="formInlineName">
-      <ControlLabel>Recipe</ControlLabel>
-      {' '}
-      <FormControl className="ingredientsTextInput" type="text" placeholder="Recipe Name" />
-      </FormGroup>
+        <Form>
+          <Modal.Header>
+            <Modal.Title className="text-center">Add a recipe</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormGroup controlId="formInlineName">
+              <ControlLabel>Recipe</ControlLabel>
+              {' '}
+              <FormControl className="nameTextInput" type="text" placeholder="Recipe Name"
+                  onChange={event => this.setState({name: event.target.value})} />
+            </FormGroup>
 
-      <FormGroup controlId="formInlineName">
-      <ControlLabel>Ingredients</ControlLabel>
-      {' '}
-      <FormControl className="ingredientsTextArea" componentClass="textarea" />
-      </FormGroup>
+            <FormGroup controlId="formInlineName">
+              <ControlLabel>Ingredients</ControlLabel>
+              {' '}
+              <FormControl className="ingredientsTextArea" componentClass="textarea" placeholder="Ingredients"
+                onChange={event => this.setState({ingredients: event.target.value})}/>
+            </FormGroup>
 
-      </Modal.Body>
-      <Modal.Footer>
-      <Button  bsStyle="primary">Add</Button>
-      <Button  bsStyle="primary" onClick={(event) => this.hideModal()}>Close</Button>
-      </Modal.Footer>
-      </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button  bsStyle="primary" onClick={ event => this.onFormSubmit(event)}>Add</Button>
+            <Button  bsStyle="primary" onClick={ event => this.hideModal()}>Close</Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
   }
 }
 
-export default AddRecipeItem;
+function mapDispatchToProps(dispatch){
+  return {
+    onAddItem: (actionAddRecipe) => {
+      dispatch(actionAddRecipe);
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps) (AddRecipeItem);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './styles/RecipeList.css';
+import { connect } from 'react-redux';
 import RecipeItem from './RecipeItem';
+import './styles/RecipeList.css';
 
 class RecipeList extends Component {
 
@@ -10,11 +11,11 @@ class RecipeList extends Component {
   }
 
   renderItems() {
-    var { items } = this.props;
+    var { recipes } = this.props;
     var itemList = [];
-    if (items !== undefined && items.length > 0)
+    if (recipes !== undefined && recipes.length > 0)
     {
-      itemList = items.map((recipe, index) => {
+      itemList = recipes.map((recipe, index) => {
         return <RecipeItem key={index} recipe={recipe}/>;
       });
     }
@@ -29,4 +30,12 @@ class RecipeList extends Component {
   }
 }
 
-export default RecipeList;
+function mapStateToProps(state)
+{
+  const { recipes } = state;
+  return {
+    recipes
+  }
+}
+
+export default connect(mapStateToProps) (RecipeList);

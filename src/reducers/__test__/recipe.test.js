@@ -12,6 +12,48 @@ describe('recipes reducer', () => {
     )
   });
 
+  it('should handle SET_RECIPES', () => {
+    const stateSetRecipeBefore = {
+      recipes: [],
+      item_expand: -1,
+      edit_mode: false
+    };
+
+    const recipes = [{
+      name: 'bun cha',
+      ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
+    }, {
+      name: 'thit bo ham',
+      ingredients: 'gung, nuoc ma, 1 thia dau, ca rot, duong, muoi, mat ong'
+    },
+    {
+      name: 'porc au caramel',
+      ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
+    }];
+    const actionsetRecipe = {
+      type: 'SET_RECIPES',
+      recipes: recipes
+    };
+
+    const statesetRecipes1Expected = {
+      recipes: recipes,
+      item_expand: -1,
+      edit_mode: false
+    };
+
+    deepFreeze(stateSetRecipeBefore);
+    deepFreeze(recipes);
+    expect(
+      reducer (
+        stateSetRecipeBefore,
+        actionsetRecipe
+      )
+    ).toEqual(
+      statesetRecipes1Expected
+    );
+
+  });
+
   it('should handle ADD_RECIPE', () => {
     const stateSimpleBefore = {
       recipes: [],

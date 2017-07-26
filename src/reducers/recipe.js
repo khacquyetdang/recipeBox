@@ -7,6 +7,11 @@ const initialState = {
 
 export default function recipe(state = initialState, action) {
   switch (action.type) {
+    case 'SET_RECIPES': {
+      return Object.assign({}, state, {
+        recipes: action.recipes
+      });
+    }
     case 'ADD_RECIPE': {
       return Object.assign({}, state, {
         recipes: [
