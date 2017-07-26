@@ -34,6 +34,7 @@ class RecipeItem extends Component {
       expand
     });
   }
+  
   closeDeleteAlert(event)
   {
     this.setState({
