@@ -3,7 +3,7 @@ import { Button, Well, Modal, Form,
 FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import './styles/AddRecipeItem.css';
 import { connect } from 'react-redux';
-
+import { addRecipe } from '../actions';
 class AddRecipeItem extends Component {
   constructor(props)
   {
@@ -20,14 +20,9 @@ class AddRecipeItem extends Component {
     const { store } = this.context;
     if (this.state.name.trim().length > 0)
     {
-      const actionAddRecipe = {
-        type: 'ADD_RECIPE',
-        name: this.state.name,
-        ingredients: this.state.ingredients
-      };
       // both of them work
       //this.props.onAddItem(actionAddRecipe);
-      this.props.dispatch(actionAddRecipe);
+      this.props.addRecipe(this.state.name, this.state.ingredients);
       this.props.onCloseAddItemModal();
     }
   }
@@ -78,13 +73,6 @@ class AddRecipeItem extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    onAddItem: (actionAddRecipe) => {
-      dispatch(actionAddRecipe);
-    }
-  }
-}
 
 //export default connect(null, mapDispatchToProps) (AddRecipeItem);
-export default connect() (AddRecipeItem);
+export default connect(null, {addRecipe}) (AddRecipeItem);

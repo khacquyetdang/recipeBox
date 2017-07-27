@@ -8,7 +8,7 @@ import {
     LOCAL_STORAGE_KEY,
 } from '../constants';
 
-const initialState = {
+export const initialState = {
   recipes: [],
   item_expand: -1,
   edit_mode: false
@@ -20,11 +20,7 @@ function updateLocalStorage(state)
 }
 export default function recipe(state = initialState, action) {
   var recipes = [];
-  state = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  if (state === undefined || state === null || state === "[object Object]")
-  {
-    state = initialState;
-  }
+
   switch (action.type) {
     case SET_RECIPES: {
       return Object.assign({}, state, {
@@ -32,14 +28,12 @@ export default function recipe(state = initialState, action) {
       });
     }
     case ADD_RECIPE: {
-      console.log("AddRecipe");
-      console.log(state);
       recipes = [
-        ...state.recipes,
         {
           name: action.name,
           ingredients: action.ingredients,
-        }
+        },
+        ...state.recipes
       ];
       state = Object.assign({}, state, {
         recipes: recipes }

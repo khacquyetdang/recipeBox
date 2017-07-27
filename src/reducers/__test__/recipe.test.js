@@ -7,6 +7,8 @@ import {
     VIEW_RECIPE_EDIT_MODE,
     _MrDang_recipes,
 } from '../../constants';
+
+import { addRecipe, deleteRecipe, updateRecipe } from '../../actions';
 import reducer from '../recipe';
 
 import deepFreeze from 'deep-freeze';
@@ -79,16 +81,11 @@ describe('recipes reducer', () => {
       item_expand: -1,
       edit_mode: false
     };
-    const actionAdd1 = {
-      type: ADD_RECIPE,
-      name: 'Pate',
-      ingredients: 'Sel, beurre, poivre'
-    };
     deepFreeze(stateSimpleBefore);
     expect(
       reducer (
         stateSimpleBefore,
-        actionAdd1
+        addRecipe('Pate', 'Sel, beurre, poivre')
       )
     ).toEqual(
       stateSimpleAdd

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import RecipeList from './components/RecipeList';
 import AddRecipeItem from './components/AddRecipeItem';
-
+import { initialState } from './reducers/recipe';
+import { setRecipes } from './actions';
+import { LOCAL_STORAGE_KEY } from './constants';
 import './App.css';
 
 class App extends Component {
@@ -31,26 +34,23 @@ class App extends Component {
       showAddItemModal: false
     });
   }
-
-  render() {
-    const recipes = [{
-      name: 'bun cha',
-      ingredients: 'tieu, nuoc mam, bun tuoi, hanh toi'
-    }, {
-      name: 'thit bo ham',
-      ingredients: 'gung, nuoc ma, 1 thia dau, ca rot, duong, muoi, mat ong'
-    },
+  componentDidMount()
+  {
+    var state = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    if (state === undefined || state === null || state === "[object Object]")
     {
-      name: 'porc au caramel',
-      ingredients: 'l\'aile, sucre, 1 kg de porc , 1 cuière de l\'huile, du poivre, du sel'
-    }];
+      state = initialState;
+    };
+    this.props.setRecipes(state.recipes);
+  }
+  render() {
     return (
         <div className="AppContainer">
           <div className="App">
+            <Button id="addItemBtn" bsStyle="primary" onClick={(e) => this.onAddRecipeBtnClick()}>Add recipe</Button>
             <RecipeList
               showAddItemModal={this.state.showAddItemModal}
               />
-            <Button id="addItemBtn" bsStyle="primary" onClick={(e) => this.onAddRecipeBtnClick()}>Add recipe</Button>
             <AddRecipeItem show={this.state.showAddItemModal}
               onCloseAddItemModal={this.closeAddItemModal}/>
           </div>
@@ -59,4 +59,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { setRecipes }) (App);

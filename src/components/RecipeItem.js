@@ -7,6 +7,8 @@ import {
   UPDATE_RECIPE
 } from '../constants';
 
+import { deleteRecipe, updateRecipe } from '../actions';
+
 class RecipeItem extends Component {
   constructor(props)
   {
@@ -56,21 +58,12 @@ class RecipeItem extends Component {
     });
   }
   onConfirmDeleteRecipe(event) {
-    const actionDeleteRecipe = {
-      type: DELETE_RECIPE,
-      index: this.props.index
-    };
-    this.props.onDeleteRecipe(actionDeleteRecipe);
+    this.props.deleteRecipe(this.props.index);
   }
 
   onUpdateBtnClick(event) {
-    const actionUpdateRecipe = {
-      type: UPDATE_RECIPE,
-      index: this.props.index,
-      name: this.state.name,
-      ingredients: this.state.ingredients
-    };
-    this.props.onUpdateRecipe(actionUpdateRecipe);
+    //this.props.onUpdateRecipe(actionUpdateRecipe);
+    this.props.updateRecipe(this.props.index, this.state.name, this.state.ingredients);
     this.setState({
       editingMode: false
     });
@@ -208,15 +201,5 @@ class RecipeItem extends Component {
     );
   }
 }
-function mapDispatchToProps(dispatch){
-  return {
-    onDeleteRecipe: (actionDeleteRecipe) => {
-      dispatch(actionDeleteRecipe);
-    },
-    onUpdateRecipe: (actionUpdateRecipe) => {
-      dispatch(actionUpdateRecipe);
-    }
-  }
-}
 
-export default connect(null, mapDispatchToProps) (RecipeItem);
+export default connect(null, {updateRecipe, deleteRecipe}) (RecipeItem);
