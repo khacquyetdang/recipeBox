@@ -14,10 +14,7 @@ export const initialState = {
   edit_mode: false
 }
 
-function updateLocalStorage(state)
-{
-  localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(state));
-}
+
 export default function recipe(state = initialState, action) {
   var recipes = [];
 
@@ -38,7 +35,6 @@ export default function recipe(state = initialState, action) {
       state = Object.assign({}, state, {
         recipes: recipes }
       );
-      updateLocalStorage(state);
       return state;
     }
     case UPDATE_RECIPE: {
@@ -52,7 +48,6 @@ export default function recipe(state = initialState, action) {
       state = Object.assign({}, state, {
         recipes: recipes }
       );
-      updateLocalStorage(state);
       return state;
     }
     case DELETE_RECIPE: {
@@ -60,7 +55,6 @@ export default function recipe(state = initialState, action) {
       state = Object.assign({}, state, {
         recipes: recipes }
       );
-      updateLocalStorage(state);
       return state;
     }
     case VIEW_RECIPE_DETAIL: {
