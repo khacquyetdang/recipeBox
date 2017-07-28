@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import RecipeList from './components/RecipeList';
-import AddRecipeItem from './components/AddRecipeItem';
-import { initialState } from './reducers/recipe';
-import { setRecipes } from './actions';
-import { LOCAL_STORAGE_KEY } from './constants';
-import './App.css';
+import RecipeList from './RecipeList';
+import AddRecipeItem from './AddRecipeItem';
+import { initialState } from '../reducers/recipe';
+import { setRecipes } from '../actions';
+import { LOCAL_STORAGE_KEY } from '../constants';
+import './styles/App.css';
 
 class App extends Component {
 
