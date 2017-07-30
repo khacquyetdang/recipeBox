@@ -14,7 +14,6 @@ class AddRecipeItem extends Component {
       name: '',
       ingredients: ''
     }
-    console.log('Add Recipe');
   }
 
 
