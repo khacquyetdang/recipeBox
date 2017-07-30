@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Well, Modal, Form,
 FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import './styles/AddRecipeItem.css';
 import { connect } from 'react-redux';
 import { addRecipe } from '../actions';
@@ -9,10 +10,11 @@ class AddRecipeItem extends Component {
   {
     super(props);
     this.state = {
-      show: this.props.show,
+      show: true,
       name: '',
       ingredients: ''
     }
+    console.log('Add Recipe');
   }
 
 
@@ -23,20 +25,23 @@ class AddRecipeItem extends Component {
       // both of them work
       //this.props.onAddItem(actionAddRecipe);
       this.props.addRecipe(this.state.name, this.state.ingredients);
-      this.props.onCloseAddItemModal();
+      this.props.history.push("/");
     }
   }
 
 
   componentWillReceiveProps(nextProps)
   {
+    /*
     this.setState ({
       show : nextProps.show
-    });
+    });*/
   }
 
   hideModal(){
-    this.props.onCloseAddItemModal();
+    //this.props.onCloseAddItemModal();
+    this.props.history.push("/");
+
   }
   render() {
     return (
@@ -75,4 +80,4 @@ class AddRecipeItem extends Component {
 
 
 //export default connect(null, mapDispatchToProps) (AddRecipeItem);
-export default connect(null, {addRecipe}) (AddRecipeItem);
+export default withRouter(connect(null, {addRecipe}) (AddRecipeItem));
