@@ -6,7 +6,7 @@ import AddRecipeItem from './AddRecipeItem.js';
 
 const Root = ({store }) => (
   <Provider store={store}>
-    <Router>
+    <Router basename="/#">
       <div>
         <Route exact path='/' component={App} />
         <Route path='/add' component={AddRecipeItem}/>
