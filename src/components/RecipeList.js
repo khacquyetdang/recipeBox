@@ -19,6 +19,9 @@ class RecipeList extends Component {
         return <RecipeItem key={index} index={index} recipe={recipe}/>;
       });
     }
+    else {
+      return <div>Empty list, add recipe by click on the button</div>
+    }
     return itemList;
   }
   render() {
