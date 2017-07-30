@@ -30,18 +30,8 @@ class AddRecipeItem extends Component {
   }
 
 
-  componentWillReceiveProps(nextProps)
-  {
-    /*
-    this.setState ({
-      show : nextProps.show
-    });*/
-  }
-
   hideModal(){
-    //this.props.onCloseAddItemModal();
     this.props.history.push("/");
-
   }
   render() {
     return (
